@@ -25,8 +25,8 @@ public class Main extends Application{
         root.getChildren().add(ImageViewSceneryLeft);
         root.getChildren().add(hero.getSprite());
 
-        Camera cam = new Camera(70,70);
-        GameScene gs = new GameScene(root2,512,512,cam,"desert.png","desert.png");
+        Camera cam = new Camera(50,100);
+        GameScene gs = new GameScene(root2);
 
         primaryStage.setScene(gs);
         primaryStage.show();
