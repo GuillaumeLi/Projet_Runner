@@ -19,4 +19,8 @@ abstract public class AnimatedThing {
         sprite = new ImageView(tmpImage);
         //sprite.setViewport(new Rectangle2D(index));
     }
+
+    public ImageView getSprite() {
+        return sprite;
+    }
 }
