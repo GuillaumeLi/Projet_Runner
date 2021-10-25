@@ -15,12 +15,12 @@ abstract public class AnimatedThing {
     private int initialY;
 
     private int index;
-    private double duration;
     private int maxIndex;
-    private double windowSize;
     private int frameOffset;
+    private double duration;
+    private double windowSize;
 
-    public AnimatedThing(String filename, double x, double y, int width, int height, int initialX, int initialY, int maxIndex, int frameOffset){
+    public AnimatedThing(String filename, double x, double y, int width, int height, int initialX, int initialY, int maxIndex, int frameOffset, double duration){
         xPos = x;
         yPos = y;
         spriteHeight = height;
@@ -29,6 +29,7 @@ abstract public class AnimatedThing {
         this.initialX = initialX;
         this.initialY = initialY;
         this.frameOffset = frameOffset;
+        this.duration = duration;
         spriteSheet = new Image(filename);
         sprite = new ImageView(spriteSheet);
         sprite.setViewport(new Rectangle2D(this.initialX,this.initialY,spriteWidth,spriteHeight));
@@ -40,11 +41,14 @@ abstract public class AnimatedThing {
         return sprite;
     }
 
-    public int getIndex(double time) {
+/*    public int getIndex(double time) {
         return index = (int)((time%(maxIndex*duration))/duration);
-    }
+    }*/
 
     public void update(double time) {
-        sprite.setViewport(new Rectangle2D(initialX+(this.getIndex(time)*frameOffset),initialY,spriteWidth,spriteHeight));
+        index = (int)((time%(maxIndex*duration))/duration);
+        System.out.println(index);
+        //System.out.println(time);
+        sprite.setViewport(new Rectangle2D(initialX+(index*frameOffset),initialY,spriteWidth,spriteHeight));
     }
 }

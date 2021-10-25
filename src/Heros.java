@@ -9,7 +9,7 @@ public class Heros extends AnimatedThing{
     private ImageView sprite;
 
     public Heros(int x, int y,String file) {
-        super(file,x,y,75,100,20,15,5,75);
+        super(file,x,y,75,100,20,0,6,79,0.3);
 /*        posX = x;
         posY = y;
         spriteSheet = new Image(file);

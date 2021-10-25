@@ -17,7 +17,7 @@ public class GameScene extends Scene {
         leftBackground = new StaticThing(800,400, "desert.png");
         rightBackground = new StaticThing(800,400, "desert.png");
         heart = new StaticThing(50,50,"heart.png");
-        hero = new Heros(300,300,"heros.png");
+        hero = new Heros(30,250,"heros.png");
         numberOfLives = 3;
 
         root.getChildren().add(rightBackground.getSprite());
@@ -25,9 +25,8 @@ public class GameScene extends Scene {
         root.getChildren().add(heart.getSprite());
         root.getChildren().add(hero.getSprite());
 
-        timer.start();
-
         render();
+        timer.start();
     }
 
     public void render() {
@@ -39,10 +38,11 @@ public class GameScene extends Scene {
 
     AnimationTimer timer = new AnimationTimer() {
         public void handle(long time) {
-            final long startNanoTime = System.nanoTime();
-            double t = (time - startNanoTime)/1000000000.0;
+            //final long startNanoTime = System.nanoTime();
+            //double t = (startNanoTime - time)/10000.0;
+            double t = time / 800000000.0;
             hero.update(t);
-            camera.update(t);
+            camera.update(time);
             //gameScene.update(time);
         }
     };
