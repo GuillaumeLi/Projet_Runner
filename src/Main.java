@@ -19,11 +19,11 @@ public class Main extends Application{
         Scene scene = new Scene(root, 600, 400);
 
 
-        Heros hero = new Heros(300,300,"heros.png");
+        //Heros hero = new Heros(300,300,"heros.png");
 
 
         root.getChildren().add(ImageViewSceneryLeft);
-        root.getChildren().add(hero.getSprite());
+        //root.getChildren().add(hero.getSprite());
 
         Camera cam = new Camera(50,100);
         GameScene gs = new GameScene(root2);

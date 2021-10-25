@@ -16,6 +16,10 @@ public class Camera {
         return posY;
     }
 
+    public void update(double time) {
+
+    }
+
     @Override
     public String toString() {
         return "position x : "+posX+"\nposition y : "+posY;
