@@ -21,10 +21,10 @@ public class Main extends Application{
         //Heros hero = new Heros(300,300,"heros.png");
 
 
-        root.getChildren().add(ImageViewSceneryLeft);
+        //root.getChildren().add(ImageViewSceneryLeft);
         //root.getChildren().add(hero.getSprite());
 
-        Camera cam = new Camera(50,100);
+        //Camera cam = new Camera(50,100);
         GameScene gs = new GameScene(root2);
 
         primaryStage.setScene(gs);

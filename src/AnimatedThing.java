@@ -41,13 +41,9 @@ abstract public class AnimatedThing {
         return sprite;
     }
 
-/*    public int getIndex(double time) {
-        return index = (int)((time%(maxIndex*duration))/duration);
-    }*/
-
     public void update(double time) {
         index = (int)((time%(maxIndex*duration))/duration);
-        System.out.println(index);
+        //System.out.println(index);
         //System.out.println(time);
         sprite.setViewport(new Rectangle2D(initialX+(index*frameOffset),initialY,spriteWidth,spriteHeight));
     }

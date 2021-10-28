@@ -9,10 +9,10 @@ public class Heros extends AnimatedThing{
     private ImageView sprite;
 
     public Heros(int x, int y,String file) {
-        super(file,x,y,75,100,20,0,6,79,0.3);
-/*        posX = x;
+        super(file,x,y,85,100,0,0,6,85,0.2);
+        posX = x;
         posY = y;
-        spriteSheet = new Image(file);
+/*        spriteSheet = new Image(file);
         sprite = new ImageView(spriteSheet);
         sprite.setViewport(new Rectangle2D(20,15,60,80));
         sprite.setX(posX);
@@ -22,5 +22,17 @@ public class Heros extends AnimatedThing{
     /*public ImageView getSprite(){
         return sprite;
     }*/
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosX(int newXPos) {
+        posX = newXPos;
+    }
 
 }
