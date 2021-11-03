@@ -19,7 +19,7 @@ public class GameScene extends Scene {
         rightBackground = new StaticThing(400,800, "desert.png");
         heart = new StaticThing(50,50,"heart.png");
         hero = new Heros(30,250,"heros.png");
-        camera = new Camera(1200,0,hero);
+        camera = new Camera(800,0,hero);
         numberOfLives = 3;
 
         root.getChildren().add(rightBackground.getSprite());
@@ -33,9 +33,15 @@ public class GameScene extends Scene {
 
     public void render() {
         offset = camera.getPosX()%leftBackground.getWidth();
-        leftBackground.getSprite().setViewport(new Rectangle2D(0,0,leftBackground.getWidth()-offset, leftBackground.getHeight()));
-        rightBackground.getSprite().setViewport(new Rectangle2D(rightBackground.getWidth()-offset,0, offset,rightBackground.getHeight()));
-        rightBackground.getSprite().setX(rightBackground.getWidth()-offset);
+        if (offset<=0) {
+            Math.abs(offset);
+        }
+        //leftBackground.getSprite().setViewport(new Rectangle2D(offset, 0,leftBackground.getWidth()-offset, leftBackground.getHeight()));
+        //rightBackground.getSprite().setViewport(new Rectangle2D(rightBackground.getWidth()-offset,0, offset,rightBackground.getHeight()));
+        leftBackground.getSprite().setViewport(new Rectangle2D(0,0, offset, leftBackground.getHeight()));
+        rightBackground.getSprite().setViewport(new Rectangle2D(offset,0, rightBackground.getWidth()-offset,rightBackground.getHeight()));
+        //rightBackground.getSprite().setX(rightBackground.getWidth()-offset);
+        leftBackground.getSprite().setX(leftBackground.getWidth()-offset);
         heart.getSprite().setViewport(new Rectangle2D(0,0,heart.getHeight(), heart.getWidth()));
     }
 
@@ -46,10 +52,10 @@ public class GameScene extends Scene {
             //double t = time / 800000000.0;
             hero.update(t);
             camera.update(t);
-            //render();
+            render();
             //System.out.println(t);
             //System.out.println(startNanoTime);
-            //System.out.println(offset);
+            System.out.println(offset);
         }
     };
 

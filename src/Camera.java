@@ -20,17 +20,14 @@ public class Camera {
         return posX;
     }
 
-    public double getPosY(){
-        return posY;
-    }
-
     public void update(double time) {
-        //double t = time / 1000000;
-        acceleration = (k/mass)*(hero.getPosX()-posX)+(friction/mass)*velocity;
-        velocity = Math.abs(acceleration * time);
-        posX = velocity * time;
+        //acceleration = (k/mass)*(hero.getPosX()-posX)-((friction/mass)*velocity);
+        acceleration = 0.15*(hero.getXPos()-posX)-0.4*velocity;
+        velocity = velocity + acceleration * 0.16;
+        posX = posX + velocity * 0.16;
         //System.out.println(posX);
-        System.out.println(posX);
+        //posX = posX + time;
+        //System.out.println(hero.getXPos());
     }
 
     @Override

@@ -23,10 +23,6 @@ public class Heros extends AnimatedThing{
         return sprite;
     }*/
 
-    public int getPosX() {
-        return posX;
-    }
-
     public int getPosY() {
         return posY;
     }

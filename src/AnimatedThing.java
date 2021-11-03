@@ -23,6 +23,7 @@ abstract public class AnimatedThing {
     public AnimatedThing(String filename, double x, double y, int width, int height, int initialX, int initialY, int maxIndex, int frameOffset, double duration){
         xPos = x;
         yPos = y;
+        attitude = 1;
         spriteHeight = height;
         spriteWidth = width;
         this.maxIndex = maxIndex;
@@ -46,5 +47,11 @@ abstract public class AnimatedThing {
         //System.out.println(index);
         //System.out.println(time);
         sprite.setViewport(new Rectangle2D(initialX+(index*frameOffset),initialY,spriteWidth,spriteHeight));
+        xPos = xPos + 2;
+        sprite.setX(xPos);
+    }
+
+    public double getXPos() {
+        return xPos;
     }
 }
