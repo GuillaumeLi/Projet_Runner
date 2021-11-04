@@ -27,6 +27,11 @@ public class GameScene extends Scene {
         root.getChildren().add(heart.getSprite());
         root.getChildren().add(hero.getSprite());
 
+        this.setOnMouseClicked((event)-> {
+            System.out.println("Jump");
+            hero.jump();
+        });
+
         render();
         timer.start();
     }
@@ -36,8 +41,6 @@ public class GameScene extends Scene {
         if (offset<=0) {
             Math.abs(offset);
         }
-        //leftBackground.getSprite().setViewport(new Rectangle2D(offset, 0,leftBackground.getWidth()-offset, leftBackground.getHeight()));
-        //rightBackground.getSprite().setViewport(new Rectangle2D(rightBackground.getWidth()-offset,0, offset,rightBackground.getHeight()));
         leftBackground.getSprite().setViewport(new Rectangle2D(0,0, offset, leftBackground.getHeight()));
         rightBackground.getSprite().setViewport(new Rectangle2D(offset,0, rightBackground.getWidth()-offset,rightBackground.getHeight()));
         //rightBackground.getSprite().setX(rightBackground.getWidth()-offset);
@@ -51,11 +54,11 @@ public class GameScene extends Scene {
             double t = Math.abs((startNanoTime - time)/1000000000.0);
             //double t = time / 800000000.0;
             hero.update(t);
-            camera.update(t);
+            //camera.update(t);
             render();
             //System.out.println(t);
             //System.out.println(startNanoTime);
-            System.out.println(offset);
+            //System.out.println(offset);
         }
     };
 
