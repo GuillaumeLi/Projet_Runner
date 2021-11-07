@@ -38,13 +38,10 @@ public class GameScene extends Scene {
 
     public void render() {
         offset = camera.getPosX()%leftBackground.getWidth();
-        if (offset<=0) {
-            Math.abs(offset);
-        }
-        leftBackground.getSprite().setViewport(new Rectangle2D(0,0, offset, leftBackground.getHeight()));
-        rightBackground.getSprite().setViewport(new Rectangle2D(offset,0, rightBackground.getWidth()-offset,rightBackground.getHeight()));
-        //rightBackground.getSprite().setX(rightBackground.getWidth()-offset);
-        leftBackground.getSprite().setX(leftBackground.getWidth()-offset);
+        leftBackground.getSprite().setViewport(new Rectangle2D(offset,0, leftBackground.getWidth(), leftBackground.getHeight()));
+        rightBackground.getSprite().setViewport(new Rectangle2D(0,0, rightBackground.getWidth(),rightBackground.getHeight()));
+        rightBackground.getSprite().setX(rightBackground.getWidth()-offset);
+        //leftBackground.getSprite().setX(leftBackground.getWidth()-offset);
         heart.getSprite().setViewport(new Rectangle2D(0,0,heart.getHeight(), heart.getWidth()));
     }
 
@@ -52,13 +49,13 @@ public class GameScene extends Scene {
     AnimationTimer timer = new AnimationTimer() {
         public void handle(long time) {
             double t = Math.abs((startNanoTime - time)/1000000000.0);
-            //double t = time / 800000000.0;
             hero.update(t);
-            //camera.update(t);
+            camera.update(t);
             render();
             //System.out.println(t);
             //System.out.println(startNanoTime);
             //System.out.println(offset);
+            //System.out.println(t);
         }
     };
 
