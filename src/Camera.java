@@ -22,13 +22,19 @@ public class Camera {
 
     public void update(double time) {
         //acceleration = (k/mass)*(hero.getPosX()-posX)-((friction/mass)*velocity);
-        acceleration = 1.5*(hero.getXPos()-posX)-0.7*velocity;
-        //acceleration = 1*(hero.getXPos()-this.posX)-1.2*2;
+        acceleration = 3*(hero.getXPos()-posX)-1*velocity;
+//        //acceleration = 1*(hero.getXPos()-this.posX)-1.2*2;
         velocity = velocity + acceleration * 0.016;
         posX = posX + velocity * 0.016;
-        //System.out.println(posX);
+//        System.out.println(posX);
+//        System.out.println(hero.getXPos());
+//        System.out.println("velocity : "+velocity);
+//        System.out.println("acceleration : "+acceleration);
+
+        hero.getSprite().setX(hero.getSprite().getX()-posX+50);
+
         //posX = posX + time;
-        //System.out.println(hero.getXPos());
+
     }
 
     @Override

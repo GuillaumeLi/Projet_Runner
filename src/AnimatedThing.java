@@ -8,8 +8,8 @@ abstract public class AnimatedThing {
 
     private double xAcceleration;
     private double yAcceleration;
-    private double xVelocity = 10;
-    private double yVelocity = 10;
+    private double xVelocity = 2;
+    private double yVelocity = 2;
 
     private double yForce = 10;
 
@@ -74,22 +74,23 @@ abstract public class AnimatedThing {
                 sprite.setX(xPos);
                 break;
             case 3 : //Hero is jumping up
-                if(yPos > 0){
+                if(yPos > 150){
 
                     //yAcceleration = (yForce + gravity - yVelocity) / mass;
                     //yAcceleration = (yForce + gravity - yVelocity / friction) / mass;
                     //yVelocity = yVelocity + yAcceleration;
-                    yPos = yPos - yVelocity;
-                    yVelocity = yVelocity - ((mass*yVelocity/friction)+gravity);
 
-                    System.out.println("velocity :"+yVelocity);
+                    //yPos = yPos - yVelocity;
+                    //yVelocity = yVelocity - ((mass*yVelocity/friction)+gravity);
+
+                    //System.out.println("velocity :"+yVelocity);
                     //System.out.println("acceleration :"+yAcceleration);
-                    System.out.println("position : "+yPos);
+                    //System.out.println("position : "+yPos);
 
-                    xPos = xPos + xVelocity;
-                    xVelocity = xVelocity - (friction*xVelocity/mass);
-                    //yPos = yPos - 5;
-                    //xPos = xPos + 5.5;
+                    //xPos = xPos + xVelocity;
+                    //xVelocity = xVelocity - (friction*xVelocity/mass);
+                    yPos = yPos - 5;
+                    xPos = xPos + 2;
                     sprite.setY(yPos);
                     sprite.setX(xPos);
                     sprite.setViewport(new Rectangle2D(0,160,spriteWidth,spriteHeight));
@@ -102,12 +103,12 @@ abstract public class AnimatedThing {
                 if(yPos < 250){
                     //yAcceleration = (yForce + gravity - yVelocity) / mass;
                     //yVelocity = yVelocity + yAcceleration;
-                    yPos = yPos + yVelocity;
-                    yVelocity = yVelocity - (mass*yVelocity/friction)+gravity;
-                    //yPos = yPos + 5;
-                    xPos = xPos + xVelocity;
-                    xVelocity = xVelocity - (mass*xVelocity/friction);
-                    //xPos = xPos + 5.5;
+                    //yPos = yPos + yVelocity;
+                    //yVelocity = yVelocity - (mass*yVelocity/friction)+gravity;
+                    yPos = yPos + 5;
+                    //xPos = xPos + xVelocity;
+                    //xVelocity = xVelocity - (mass*xVelocity/friction);
+                    xPos = xPos + 2;
                     sprite.setY(yPos);
                     sprite.setX(xPos);
                     sprite.setViewport(new Rectangle2D(frameOffset,160,spriteWidth,spriteHeight));
@@ -118,6 +119,10 @@ abstract public class AnimatedThing {
                 break;
         }
 
+    }
+
+    public double getxVelocity(){
+        return xVelocity;
     }
 
     public void jump() {
