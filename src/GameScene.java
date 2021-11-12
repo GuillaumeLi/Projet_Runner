@@ -50,6 +50,7 @@ public class GameScene extends Scene {
         public void handle(long time) {
             double t = Math.abs((startNanoTime - time)/1000000000.0);
             hero.update(t);
+            //hero.movementUpdate(time);
             camera.update(t);
             render();
             //System.out.println(t);
