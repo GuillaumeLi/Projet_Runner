@@ -6,6 +6,7 @@ public class Heros extends AnimatedThing{
     //Hero's characteristics
     private int xPos;
     private int yPos;
+    private int xVelocity;
     private int attitude;
 
     //Hero's sprites characteristics
