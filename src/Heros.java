@@ -4,10 +4,21 @@ import javafx.scene.image.ImageView;
 
 public class Heros extends AnimatedThing{
     //Hero's characteristics
-    private int xPos;
-    private int yPos;
-    private int xVelocity;
+    private double xPos;
+    private double yPos;
+    private double xVelocity;
+    private double yVelocity;
+    private double xAcceleration;
+    private double yAcceleration;
+    private static double X_FORCE = 10;
+    private static double Y_FORCE = 5;
+    private static final double MASS = 60;
     private int attitude;
+    private boolean isGrounded;
+
+    //World's characteristics
+    private static final double GRAVITY = 3;
+    private static final double FRICTION = 3;
 
     //Hero's sprites characteristics
     private static final int SPRITE_WIDTH = 85;
@@ -24,22 +35,35 @@ public class Heros extends AnimatedThing{
         xPos = x;
         yPos = y;
         attitude = 2;
+        xVelocity = 2;
+        yVelocity = 2;
+        isGrounded = true;
     }
 
     @Override
     public void movementUpdate() {
         switch (attitude) {
             case 1 : //Hero is still
-                this.getSprite().setX(xPos);
-                this.getSprite().setY(yPos);
+                this.getSprite().setX((int)xPos);
+                this.getSprite().setY((int)yPos);
                 break;
             case 2 : //Hero is running
                 xPos = xPos + 2;
-                this.getSprite().setX(xPos);
-                this.getSprite().setY(yPos);
+                this.getSprite().setX((int)xPos);
+                this.getSprite().setY((int)yPos);
                 break;
             case 3 : //Hero is jumping up
                 if(yPos > 150){
+
+                    xAcceleration = (X_FORCE - xVelocity / FRICTION) / MASS;
+                    yAcceleration = (Y_FORCE + GRAVITY - yVelocity / FRICTION) / MASS;
+
+                    xVelocity = yVelocity + xAcceleration;
+                    yVelocity = yVelocity + yAcceleration;
+
+                    xPos = xPos + xVelocity;
+                    yPos = yPos - yVelocity;
+
 
                     //yAcceleration = (yForce + gravity - yVelocity) / mass;
                     //yAcceleration = (yForce + gravity - yVelocity / friction) / mass;
@@ -48,53 +72,61 @@ public class Heros extends AnimatedThing{
                     //yPos = yPos - yVelocity;
                     //yVelocity = yVelocity - ((mass*yVelocity/friction)+gravity);
 
-                    //System.out.println("velocity :"+yVelocity);
-                    //System.out.println("acceleration :"+yAcceleration);
-                    //System.out.println("position : "+yPos);
+                    System.out.println("acceleration y :"+yAcceleration);
+                    System.out.println("velocity y :"+yVelocity);
+                    System.out.println("position y : "+yPos);
 
                     //xPos = xPos + xVelocity;
                     //xVelocity = xVelocity - (friction*xVelocity/mass);
-                    yPos = yPos - 5;
-                    xPos = xPos + 2;
-                    this.getSprite().setY(yPos);
-                    this.getSprite().setX(xPos);
+                    //yPos = yPos - 5;
+                    //xPos = xPos + 2;
+                    this.getSprite().setY((int)yPos);
+                    this.getSprite().setX((int)xPos);
                     this.getSprite().setViewport(new Rectangle2D(0,160,SPRITE_WIDTH,SPRITE_HEIGHT));
                 }
                 else {
+                    yVelocity = 2;
                     attitude = 4;
                 }
                 break;
             case 4 : //Hero is jumping down
                 if(yPos < 250){
+                    //Update Hero's acceleration
+                    xAcceleration = (X_FORCE - xVelocity / FRICTION) / MASS;
+                    yAcceleration = (Y_FORCE + GRAVITY - yVelocity / FRICTION) / MASS;
+                    //Update Hero's velocity
+                    xVelocity = yVelocity + xAcceleration;
+                    yVelocity = yVelocity + yAcceleration;
+                    //Update Hero's position
+                    xPos = xPos + xVelocity;
+                    yPos = yPos + yVelocity;
+
                     //yAcceleration = (yForce + gravity - yVelocity) / mass;
                     //yVelocity = yVelocity + yAcceleration;
                     //yPos = yPos + yVelocity;
                     //yVelocity = yVelocity - (mass*yVelocity/friction)+gravity;
-                    yPos = yPos + 5;
+                    //yPos = yPos + 5;
                     //xPos = xPos + xVelocity;
                     //xVelocity = xVelocity - (mass*xVelocity/friction);
-                    xPos = xPos + 2;
-                    this.getSprite().setY(yPos);
-                    this.getSprite().setX(xPos);
+                    //xPos = xPos + 2;
+                    this.getSprite().setY((int)yPos);
+                    this.getSprite().setX((int)xPos);
                     this.getSprite().setViewport(new Rectangle2D(FRAME_OFFSET,160,SPRITE_WIDTH,SPRITE_HEIGHT));
                 }
                 else {
+                    yVelocity = 2;
                     attitude = 2;
+                    isGrounded = true;
                 }
                 break;
         }
     }
 
     public void jump() {
-        attitude = 3;
-/*        accelerationX = (forceX - velocityX / friction) / mass;
-        accelerationY = (forceY + gravity - velocityY / friction) / mass;
-
-        velocityX = velocityX + accelerationX;
-        velocityY = velocityY + accelerationY;
-
-        positionX = positionX + velocityX;
-        positionY = positionY + velocityY;*/
+        if(isGrounded == true){
+            attitude = 3;
+            isGrounded = false;
+        }
     }
 
     public double getXPos() {

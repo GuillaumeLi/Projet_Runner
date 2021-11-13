@@ -3,16 +3,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 abstract public class AnimatedThing {
-    private double xAcceleration;
-    private double yAcceleration;
-    private double xVelocity = 2;
-    private double yVelocity = 2;
-
-    private double yForce = 10;
-
-    private final double gravity=10;
-    private final double friction=3;
-    private final double mass=60;
 
     private Image spriteSheet;
     private ImageView sprite;
