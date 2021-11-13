@@ -42,6 +42,7 @@ public class Heros extends AnimatedThing{
 
     @Override
     public void movementUpdate() {
+
         switch (attitude) {
             case 1 : //Hero is still
                 this.getSprite().setX((int)xPos);
