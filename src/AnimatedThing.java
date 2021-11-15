@@ -3,21 +3,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 abstract public class AnimatedThing {
+    //Object's position
+    protected double xPos;
+    protected double yPos;
 
+    //Object's sprite
     private Image spriteSheet;
     private ImageView sprite;
 
-    private int spriteHeight;
-    private int spriteWidth;
-    private int initialX;
-    private int initialY;
-
+    //Sprite's characteristics
+    protected int spriteWidth;
+    protected int spriteHeight;
+    protected int frameOffset;
     private int index;
-    private int maxIndex;
-    private int frameOffset;
-    private double duration;
+    protected int maxIndex;
+    protected double duration;
+    protected int initialX;
+    protected int initialY;
 
-    public AnimatedThing(String filename, int width, int height, int initialX, int initialY, int maxIndex, int frameOffset, double duration){
+    public AnimatedThing(double xPos, double yPos, String filename, int width, int height, int initialX, int initialY, int maxIndex, int frameOffset, double duration){
+        this.xPos = xPos;
+        this.yPos = yPos;
         spriteHeight = height;
         spriteWidth = width;
         this.maxIndex = maxIndex;
@@ -37,8 +43,20 @@ abstract public class AnimatedThing {
 
     abstract public void movementUpdate();
 
+    public Rectangle2D getHitBox() {
+        return new Rectangle2D(xPos,yPos,spriteWidth,spriteHeight);
+    }
+
+    public boolean intersect (AnimatedThing object) {
+        return object.getHitBox().intersects(this.getHitBox());
+    }
+
     public ImageView getSprite() {
         return sprite;
+    }
+
+    public double getXPos() {
+        return xPos;
     }
 
 }
