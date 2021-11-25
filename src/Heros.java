@@ -4,37 +4,44 @@ import javafx.scene.image.ImageView;
 
 public class Heros extends AnimatedThing{
     //Hero's characteristics
-    private double xVelocity;
+    //private static final double X_VELOCITY = 0.5;
     private double yVelocity;
-    private double xAcceleration;
-    private double yAcceleration;
-    private static final double X_FORCE = 10;
-    private static final double Y_FORCE = 5;
+    private double yAcceleration = 40;
+    private static final int X_FORCE = 2;
     private static final double MASS = 60;
     private int attitude;
     private boolean isGrounded;
 
+    //Hero's power
+    private double invincibility = 25000.0;
+    private boolean invincible = false;
+    private double invincibilityTime;
+
     //World's characteristics
-    private static final double GRAVITY = 3;
-    private static final double FRICTION = 3;
+    private static final double GRAVITY = 0.1;
+    private static final double DELTA_TIME = 0.018;
 
     //Constructor
     public Heros(double x, double y,String file) {
         super(x,y,file,85,100,0,0,6,85,0.2);
         attitude = 2;
-        xVelocity = 2;
-        yVelocity = 2;
         isGrounded = true;
     }
-
 
     /**
      * Definition of every hero's attitude
      * Updating hero's position on the scene
      */
-
     @Override
-    public void movementUpdate() {
+    public void movementUpdate(double time) {
+
+        //Substract time to invicibility, if it reaches negative value the hero can't lose live
+        if(invincibility > 0) {
+            invincibility = invincibility - time;
+        }
+        else {
+            invincible = true;
+        }
 
         switch (attitude) {
             case 1 : //Hero is still
@@ -42,78 +49,41 @@ public class Heros extends AnimatedThing{
                 this.getSprite().setY((int)yPos);
                 break;
 
-            case 2 : //Hero is running
-                xPos = xPos + 2;
+            case 2 : //Hero is running and accelerate by the time
+                //xPos = xPos + 10;
+                xPos = xPos + X_VELOCITY * time;
                 this.getSprite().setX((int)xPos);
                 this.getSprite().setY((int)yPos);
                 break;
 
-            case 3 : //Hero is jumping up
-                if(yPos > 150){
+            case 3 : //Hero is jumping
 
-                    xAcceleration = (X_FORCE - xVelocity / FRICTION) / MASS;
-                    yAcceleration = (Y_FORCE + GRAVITY - yVelocity / FRICTION) / MASS;
+                //Updating hero's position values
+                //xPos = xPos + 10 + X_FORCE;
+                xPos = xPos + X_VELOCITY * time + X_FORCE;
+                yVelocity = yVelocity + yAcceleration * GRAVITY;
+                yPos = yVelocity * GRAVITY + yPos;
 
-                    xVelocity = yVelocity + xAcceleration;
-                    yVelocity = yVelocity + yAcceleration;
+                //Updating hero's position on the game scene
+                getSprite().setX((int)xPos);
+                getSprite().setY((int)yPos);
 
-                    xPos = xPos + xVelocity;
-                    yPos = yPos - yVelocity;
-
-
-                    //yAcceleration = (yForce + gravity - yVelocity) / mass;
-                    //yAcceleration = (yForce + gravity - yVelocity / friction) / mass;
-                    //yVelocity = yVelocity + yAcceleration;
-
-                    //yPos = yPos - yVelocity;
-                    //yVelocity = yVelocity - ((mass*yVelocity/friction)+gravity);
-
-                    System.out.println("acceleration y :"+yAcceleration);
-                    System.out.println("velocity y :"+yVelocity);
-                    System.out.println("position y : "+yPos);
-
-                    //xPos = xPos + xVelocity;
-                    //xVelocity = xVelocity - (friction*xVelocity/mass);
-                    //yPos = yPos - 5;
-                    //xPos = xPos + 2;
-                    this.getSprite().setY((int)yPos);
-                    this.getSprite().setX((int)xPos);
+                //Showing hero's jumps sprites
+                if(yVelocity < 0){
                     this.getSprite().setViewport(new Rectangle2D(0,160,spriteWidth,spriteHeight));
                 }
                 else {
-                    yVelocity = 2;
-                    attitude = 4;
-                }
-                break;
-            case 4 : //Hero is jumping down
-                if(yPos < 250){
-                    //Update Hero's acceleration
-                    xAcceleration = (X_FORCE - xVelocity / FRICTION) / MASS;
-                    yAcceleration = (Y_FORCE + GRAVITY - yVelocity / FRICTION) / MASS;
-                    //Update Hero's velocity
-                    xVelocity = yVelocity + xAcceleration;
-                    yVelocity = yVelocity + yAcceleration;
-                    //Update Hero's position
-                    xPos = xPos + xVelocity;
-                    yPos = yPos + yVelocity;
-
-                    //yAcceleration = (yForce + gravity - yVelocity) / mass;
-                    //yVelocity = yVelocity + yAcceleration;
-                    //yPos = yPos + yVelocity;
-                    //yVelocity = yVelocity - (mass*yVelocity/friction)+gravity;
-                    //yPos = yPos + 5;
-                    //xPos = xPos + xVelocity;
-                    //xVelocity = xVelocity - (mass*xVelocity/friction);
-                    //xPos = xPos + 2;
-                    this.getSprite().setY((int)yPos);
-                    this.getSprite().setX((int)xPos);
                     this.getSprite().setViewport(new Rectangle2D(frameOffset,160,spriteWidth,spriteHeight));
                 }
-                else {
-                    yVelocity = 2;
-                    attitude = 2;
+
+                //When the jump is over hero is running
+                if (yPos>250) {
+                    yVelocity = 0;
+                    yPos = 250;
                     isGrounded = true;
+                    attitude = 2;
                 }
+
                 break;
         }
     }
@@ -122,8 +92,28 @@ public class Heros extends AnimatedThing{
     public void jump() {
         if(isGrounded == true){
             attitude = 3;
+            yVelocity = -100;
             isGrounded = false;
         }
     }
 
+    //The hero is invincible and if there's collision don't lose live
+    public boolean isInvincible(double duration) {
+
+        if(invincibilityTime < 0){
+            invincibilityTime = invincibilityTime - DELTA_TIME;
+            System.out.println(invincibilityTime);
+            if(duration > 0) {
+                invincible = true;
+            }
+            else {
+                invincible = false;
+            }
+        }
+        return invincible;
+    }
+
+    public static double getxVelocity() {
+        return X_VELOCITY;
+    }
 }
