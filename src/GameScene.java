@@ -14,6 +14,7 @@ public class GameScene extends Scene {
     private Heros hero;
     private int numberOfLives;
 
+    private StaticThing [] heart;
     private Foe [] enemyList;
     private ArrayList<Foe> foeList = new ArrayList<>();
     private Foe foetest;
@@ -78,12 +79,13 @@ public class GameScene extends Scene {
         public void handle(long time) {
             double t = Math.abs((startNanoTime - time)/1000000000.0);
             hero.update(t);
-            //camera.update(t);
+            camera.update(t);
             render();
             foetest.update(t);
 
             //System.out.println("hero x : "+hero.getXPos());
             //System.out.println("foe x : "+foetest.getXPos());
+            System.out.println(noCollision);
 
             if(hero.isInvincible(2)){
                 System.out.println("invincible");
@@ -96,11 +98,9 @@ public class GameScene extends Scene {
                             numberOfLives--;
                             noCollision = false;
                         }
-                        else {
-                            if(!hero.intersect(foe)){
-                                noCollision = true;
-                            }
-                        }
+                    }
+                    else {
+                        noCollision = true;
                     }
                 }
             }
